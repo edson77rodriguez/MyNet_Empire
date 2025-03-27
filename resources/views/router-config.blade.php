@@ -1,40 +1,113 @@
-@extends('layouts.app')
+@extends('dashboard')
 
 @section('content')
-<div class="w-full max-w-lg p-8 bg-gray-800 bg-opacity-50 rounded-xl shadow-lg">
-    <h1 class="text-3xl font-semibold text-center text-white mb-4">
-        Configurar Router
-    </h1>
-    <p class="text-gray-400 text-center mb-6">
-        Actualiza la configuración de tu red Wi-Fi de manera sencilla.
-    </p>
+<div class="pc-container">
+    <div class="pc-content">
+        <!-- [breadcrumb] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h1 class="text-white">Configuración del Sistema</h1>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="">Home</a></li>
+                            <li class="breadcrumb-item"><a href="">Dashboard</a></li>
+                            <li class="breadcrumb-item" aria-current="page">Configuración del Sistema</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [breadcrumb] end -->
 
-    <!-- Mensajes de éxito o error -->
-    @if (session('success'))
-        <div class="alert alert-success mb-4 bg-green-500 text-white p-3 rounded-lg">
-            {{ session('success') }}
-        </div>
-    @endif
-    @if (session('error'))
-        <div class="alert alert-danger mb-4 bg-red-500 text-white p-3 rounded-lg">
-            {{ session('error') }}
-        </div>
-    @endif
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadow-lg border-0 bg-dark text-white rounded-xl">
+                    <div class="card-body">
+                        <p class="text-center mb-4">
+                            Ajusta los parámetros básicos del sistema de tu router.
+                        </p>
 
-    <!-- Formulario -->
-    <form action="{{ route('router.update') }}" method="POST">
-        @csrf
-        <div class="mb-4">
-            <label for="ssid" class="block text-lg text-white font-medium">Nuevo Nombre de Red (SSID)</label>
-            <input type="text" name="ssid" id="ssid" class="w-full mt-2 p-3 rounded-lg bg-gray-700 text-white border-none focus:ring-2 focus:ring-indigo-500" value="{{ old('ssid') }}" required>
+                        <!-- Mostrar notificación de éxito -->
+                        @if(session('success'))
+                            <div id="success-notification" class="alert alert-success mb-4">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        <!-- Formulario de Configuración General -->
+                        <form action="{{ route('router.system.update') }}" method="POST">
+                            @csrf
+
+                            <!-- Hora Local -->
+                            <div class="mb-4">
+                                <label for="local_time" class="form-label">Hora Local</label>
+                                <div class="input-group">
+                                    <input type="text" id="local_time" class="form-control" value="{{ now()->format('Y-m-d H:i:s') }}" readonly>
+                                    <button type="button" id="sync_browser" class="btn btn-primary">Sincronizar</button>
+                                </div>
+                            </div>
+
+                            <!-- Sincronización con NTP -->
+                            <div class="mb-4">
+                                <label class="form-label">Sincronización con NTP</label>
+                                <button type="button" id="sync_ntp" class="btn btn-success w-100">Sincronizar con Servidor NTP</button>
+                            </div>
+
+                            <!-- Nombre del Host -->
+                            <div class="mb-4">
+                                <label for="hostname" class="form-label">Nombre del Host</label>
+                                <input type="text" name="hostname" id="hostname" class="form-control" value="{{ old('hostname') }}" required>
+                            </div>
+
+                            <!-- Descripción -->
+                            <div class="mb-4">
+                                <label for="description" class="form-label">Descripción</label>
+                                <textarea name="description" id="description" class="form-control">{{ old('description') }}</textarea>
+                            </div>
+
+                            <!-- Notas -->
+                            <div class="mb-4">
+                                <label for="notes" class="form-label">Notas</label>
+                                <textarea name="notes" id="notes" class="form-control">{{ old('notes') }}</textarea>
+                            </div>
+
+                            <!-- Zona Horaria -->
+                            <div class="mb-4">
+                                <label for="timezone" class="form-label">Zona Horaria</label>
+                                <select name="timezone" id="timezone" class="form-control">
+                                    @foreach(timezone_identifiers_list() as $timezone)
+                                        <option value="{{ $timezone }}">{{ $timezone }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <!-- Botón de Enviar -->
+                            <button type="submit" class="btn btn-indigo w-100">Guardar Cambios</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="mb-6">
-            <label for="password" class="block text-lg text-white font-medium">Nueva Contraseña</label>
-            <input type="password" name="password" id="password" class="w-full mt-2 p-3 rounded-lg bg-gray-700 text-white border-none focus:ring-2 focus:ring-indigo-500" required>
-        </div>
-        <button type="submit" class="w-full py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition duration-300">
-            Actualizar
-        </button>
-    </form>
+    </div>
 </div>
+
+<script>
+    // Notificación de éxito (si existe)
+    @if(session('success'))
+        setTimeout(function() {
+            document.getElementById('success-notification').style.display = 'none';
+        }, 5000);  // Ocultar la notificación después de 5 segundos
+    @endif
+
+    document.getElementById('sync_browser').addEventListener('click', function() {
+        document.getElementById('local_time').value = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    });
+
+    document.getElementById('sync_ntp').addEventListener('click', function() {
+        alert('Función de sincronización NTP aún no implementada');
+    });
+</script>
 @endsection
