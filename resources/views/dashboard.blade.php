@@ -89,29 +89,29 @@
         <li class="pc-item">
             <a href="{{ route('system.language.style') }}" class="pc-link">Idioma y Estilo</a>
         </li>
-       
-        
+
+
     </ul>
         </li>
         <li class="pc-item">
-            <a href="" class="pc-link">Administración</a>
+            <a href="{{route('admin.password')}}" class="pc-link">Administración</a>
         </li>
         <li class="pc-item">
-            <a href="" class="pc-link">Arranque</a>
+            <a href="{{route('admin.startup')}}" class="pc-link">Arranque</a>
         </li>
         <li class="pc-item">
-            <a href="" class="pc-link">Tareas Programadas</a>
+            <a href="{{route('admin.tareas')}}" class="pc-link">Tareas Programadas</a>
         </li>
         <li class="pc-item">
-            <a href="" class="pc-link">Configuracion de LEDs</a>
+            <a href="{{route('admin.conf')}}" class="pc-link">Configuracion de LEDs</a>
         </li>
         <li class="pc-item">
-            <a href="" class="pc-link">Copia de seguridad/ Grabar firma</a>
+            <a href="{{route('admin.grab')}} " class="pc-link">Copia de seguridad/ Grabar firma</a>
         </li>
         <li class="pc-item">
             <a href="" class="pc-link">Reiniciar</a>
         </li>
-        
+
     </ul>
 </li>
 
@@ -224,26 +224,26 @@
   <script src="{{ asset('/js/fonts/custom-font.js') }}"></script>
   <script src="{{ asset('/js/pcoded.js') }}"></script>
   <script src="{{ asset('/js/feather.min.js') }}"></script>
-  
-  
-  
-  
-  
+
+
+
+
+
   <script>layout_change('light');</script>
-  
-  
-  
-  
+
+
+
+
   <script>change_box_container('false');</script>
-  
-  
-  
+
+
+
   <script>layout_rtl_change('false');</script>
-  
-  
+
+
   <script>preset_change("preset-1");</script>
-  
-  
+
+
   <script>font_change("Public-Sans");</script>
   <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -260,7 +260,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
-    
+
 
 </body>
 <!-- [Body] end -->

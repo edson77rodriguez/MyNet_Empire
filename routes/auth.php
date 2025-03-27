@@ -57,3 +57,18 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 });
+//seguridad administracion
+use App\Http\Controllers\AdminController;
+
+Route::get('/admin/password', function () {
+    return view('admin.security');
+})->name('admin.password');
+
+Route::get('/admin/ssh-access', function () {
+    return view('admin.ssh_access');
+})->name('admin.ssh_access');
+
+Route::get('/admin/ssh-keys', function () {
+    return view('admin.ssh_keys');
+})->name('admin.ssh_keys');
+

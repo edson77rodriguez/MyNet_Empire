@@ -49,3 +49,26 @@ Route::post('/system/time-settings', [SystemTimeController::class, 'updateTimeSe
 
 Route::get('/system/language-style', [SystemLanguageStyleController::class, 'showLanguageStyleSettings'])->name('system.language.style');
 Route::post('/system/language-style', [SystemLanguageStyleController::class, 'updateLanguageStyleSettings']);
+//administracion
+
+
+Route::get('/admin/password', function () {
+    return view('admin.security');
+})->name('admin.password');
+
+Route::get('/admin/ssh-access', function () {
+    return view('admin.ssh_access');
+})->name('admin.ssh_access');
+
+Route::get('/admin/ssh-keys', function () {
+    return view('admin.ssh_keys');
+})->name('admin.ssh_keys');
+
+Route::post('/admin/update-password', [AdminController::class, 'updatePassword'])->name('admin.update_password');
+
+
+Route::view('/admin/startup', 'admin.startup')->name('admin.startup');
+Route::view('/admin/arranque', 'admin.arranque')->name('admin.arranque');
+Route::view('/admin/tareas', 'admin.tareas')->name('admin.tareas');
+Route::view('/admin/conf', 'admin.conf')->name('admin.conf');
+Route::view('/admin/grab', 'admin.grab')->name('admin.grab');
