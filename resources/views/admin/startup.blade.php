@@ -10,7 +10,7 @@
             <a class="nav-link active" href="{{route('admin.startup')}}">Scripts de inicio</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{route('admin.arranque')}}">Arranque local</a>
+            <a class="nav-link active" href="{{ route('admin.arranque') }}">Arranque local</a>
         </li>
     </ul>
 
@@ -50,9 +50,18 @@
                 <td>{{ $script['nombre'] }}</td>
                 <td><button class="btn btn-primary btn-sm">ACTIVADO</button></td>
                 <td>
-                    <button class="btn btn-info btn-sm">INICIAR</button>
-                    <button class="btn btn-warning btn-sm">REINICIAR</button>
-                    <button class="btn btn-danger btn-sm">DETENER</button>
+                    <form action="{{ route('admin.startScript', $script['nombre']) }}" method="POST" style="display:inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-info btn-sm">INICIAR</button>
+                    </form>
+                    <form action="{{ route('admin.restartScript', $script['nombre']) }}" method="POST" style="display:inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-warning btn-sm">REINICIAR</button>
+                    </form>
+                    <form action="{{ route('admin.stopScript', $script['nombre']) }}" method="POST" style="display:inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-sm">DETENER</button>
+                    </form>
                 </td>
             </tr>
         @endforeach

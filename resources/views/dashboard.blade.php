@@ -100,10 +100,10 @@
             <a href="{{route('admin.startup')}}" class="pc-link">Arranque</a>
         </li>
         <li class="pc-item">
-            <a href="{{route('admin.tareas')}}" class="pc-link">Tareas Programadas</a>
+            <a href="{{route('admin.crontab')}}" class="pc-link">Tareas Programadas</a>
         </li>
         <li class="pc-item">
-            <a href="{{route('admin.conf')}}" class="pc-link">Configuracion de LEDs</a>
+            <a href="{{route('leds.index')}}" class="pc-link">Configuracion de LEDs</a>
         </li>
         <li class="pc-item">
             <a href="{{route('admin.grab')}} " class="pc-link">Copia de seguridad/ Grabar firma</a>

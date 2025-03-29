@@ -6,7 +6,11 @@ use App\Http\Controllers\RouterConfigController;
 use App\Http\Controllers\SystemLogController;
 use App\Http\Controllers\SystemTimeController;
 use App\Http\Controllers\SystemLanguageStyleController;
-
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LedController;
+use App\Http\Controllers\FirmwareController;
+use App\Http\Controllers\StartupController;
+use App\Http\Controllers\LocalStartupController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -70,5 +74,40 @@ Route::post('/admin/update-password', [AdminController::class, 'updatePassword']
 Route::view('/admin/startup', 'admin.startup')->name('admin.startup');
 Route::view('/admin/arranque', 'admin.arranque')->name('admin.arranque');
 Route::view('/admin/tareas', 'admin.tareas')->name('admin.tareas');
-Route::view('/admin/conf', 'admin.conf')->name('admin.conf');
 Route::view('/admin/grab', 'admin.grab')->name('admin.grab');
+
+Route::get('/admin/password', [AdminController::class, 'passwordForm'])->name('admin.password');
+Route::post('/admin/update-password', [AdminController::class, 'updatePassword'])->name('admin.update_password');
+
+Route::get('/admin/crontab', [AdminController::class, 'crontabForm'])->name('admin.crontab');
+Route::post('/admin/update-crontab', [AdminController::class, 'updateCrontab'])->name('admin.update_crontab');
+Route::post('/admin/restart-crond', [AdminController::class, 'restartCrond'])->name('admin.restart_crond');
+
+Route::get('leds', [LedController::class, 'index'])->name('leds.index');
+    
+// Crear un nuevo LED
+Route::get('leds/create', [LedController::class, 'create'])->name('leds.create');
+Route::post('leds', [LedController::class, 'store'])->name('leds.store');
+
+// Editar un LED existente
+Route::get('leds/{id}/edit', [LedController::class, 'edit'])->name('leds.edit');
+Route::put('leds/{id}', [LedController::class, 'update'])->name('leds.update');
+
+// Restablecer un LED
+Route::delete('leds/{id}/reset', [LedController::class, 'reset'])->name('leds.reset');
+
+
+
+Route::get('/generate-backup', [FirmwareController::class, 'generateBackup'])->name('generateBackup');
+Route::post('/reset-factory', [FirmwareController::class, 'resetToFactory'])->name('resetToFactory');
+Route::post('/upload-firmware', [FirmwareController::class, 'uploadFirmwareImage'])->name('uploadFirmwareImage');
+Route::post('/save-mudblock', [FirmwareController::class, 'saveMudblock'])->name('saveMudblock');
+Route::post('/upload-image-synupgrade', [FirmwareController::class, 'uploadImageForSynupgrade'])->name('uploadImageForSynupgrade');
+
+
+Route::post('/admin/start/{script}', [StartupController::class, 'startScript'])->name('admin.startScript');
+Route::post('/admin/restart/{script}', [StartupController::class, 'restartScript'])->name('admin.restartScript');
+Route::post('/admin/stop/{script}', [StartupController::class, 'stopScript'])->name('admin.stopScript');
+
+Route::get('/admin/arranque-local', [LocalStartupController::class, 'getRcLocalContent'])->name('admin.arranque');
+Route::post('/admin/arranque-local', [LocalStartupController::class, 'saveRcLocal'])->name('admin.saveArranque');
